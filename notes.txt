@@ -1,0 +1,105 @@
+#dumbmerch
+
+I. Preparation Stage
+
+    A. Server Side
+     - go get -u github.com/gorilla/handlers
+     - setting up gorilla/handlers package for CORS in main.go
+
+
+    B. Client Side
+     - npm install axios
+     - creating API config in client/src/config/api.js
+     - npm i react-query
+     - setting up queryclient and queryclient provider in index.js
+    
+II. Inserting Data
+
+    A. Inserting data to register account
+     - setting up client/src/components/auth/Register.js (importing useMutation, API config, storing data with useState(form, setform), inserting data process(handle submit), adding onSubmit on form)
+
+    B. Inserting data for login process
+     - client/src/components/auth/Login.js
+
+    C. Inserting product data
+     - client/src/pages/AddProductAdmin.js
+
+    D. Inserting category data
+     - client/src/pages/AddCategoryAdmin.js
+
+    E. Checking AUTH for staying logged in on refreshed page
+     - client/src/App.js
+        . importing api and setAuthToken
+        . token initiation for refreshed page
+        . userContext initiation
+        . Auth Redirect (using navigate)
+        . checking user token
+     - client/src/context/userContext.js
+        . switchcase modification
+
+III. Fetching Data
+
+    A. Fetching Product Data
+     - File product for customer : `client/src/pages/Product.js`
+     - File product for admin : `client/src/pages/ProductAdmin.js`
+        . importing useQuery and API config
+        . fetching data from database using useQuery
+
+    B. Fetching Detail Product Data
+     - File : `client/src/pages/DetailProduct.js`
+
+    C. Fetching Profile Data
+     - File : `client/src/pages/Profile.js`
+
+    D. Fetching Transaction Data 
+     - File : `client/src/pages/Profile.js`
+
+    E. Fetching Category Data
+     - File : `client/src/pages/CategoryAdmin.js`
+
+    F. Inserting Transaction (buy)
+     - File : `client/src/pages/DetailProduct.js`
+        . importing useQuery and useMutation
+        . importing API config
+        . fetching product by id from database with useQuery
+        . handling process & inserting transaction data to database using useMutation
+
+IV. Updating Data
+
+    A. Updating Product Data
+     - File : `client/src/pages/UpdateProductAdmin.js`
+        . importing useQuery, useMutation, API config
+        . creating variable for storing data using useState
+        . fetching product detail and category data
+        . handling selected category
+        . handling form data changes
+        . handling data submit
+        . 'form' element refactoring (adding onSubmit)
+
+    B. Updating Category Data
+     - File : `client/src/pages/UpdateCategoryAdmin.js`
+        . importing useQuery, useMutation, API
+        . storing category data using useState
+        . fetching category data by id
+        . handling data submit
+        . refactoring 'form' element (adding onSubmit property)
+
+V. Data Deletion
+
+    A. Product Data Deletion
+     - File : `client/src/pages/ProductAdmin.js`
+        . importing useQuery, useMutation, API config
+        . declaring variable for deletion using useState
+        . setting up modal for deletion confirmation
+        . getting product id & showing modal for deletion confirmation
+        . deletion execution using useMutation
+        . closing modal and executing deletion
+
+    B. Category Data Deletion
+     - File : `client/src/pages/CategoryAdmin.js`
+        . importing useQuery, useMutation, and API config
+        . declaring variable  for deletion using useState
+        . setting up modal for deletion confirmation
+        . getting category id & showing modal for deletion confirmation
+        . deletion execution using useMutation
+        . closing modal and executing deletion
