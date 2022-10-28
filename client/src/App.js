@@ -6,12 +6,10 @@ import NavbarEl from './components/NavbarEl';
 // import { LoginContext } from './components/Contexts/LoginContext';
 import { CartContext } from './components/Contexts/CartContext';
 
-import { QueryClient, QueryClientProvider } from 'react-query'
 import { UserContext } from './components/Contexts/userContext';
 
 import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from 'react';
-import { UserContextProvider } from './components/Contexts/userContext';
 import { API, setAuthToken } from "./config/api";
 
 import Home from './pages/Home';
@@ -23,7 +21,7 @@ import AddProduct from './pages/AddProduct';
 import Transactions from './pages/Transactions';
 import PartnerProfileEl from './components/Partners/PartnerProfileEl';
 
-// import { Outlet, Navigate } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 
 
 
@@ -35,7 +33,7 @@ function App() {
   let navigate = useNavigate();
 
   const [cartCount, setCartCount] = useState(3)
-  // const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
   const [state, dispatch] = useContext(UserContext)
 
   // const PrivateRoute = ({ element: Component, ...rest }) => {
@@ -43,6 +41,24 @@ function App() {
 
   //   return state.isLogin ? <Outlet /> : <Navigate to="/" />;
   // };
+
+  useEffect(() => {
+    // Redirect Auth
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+
+    if (state.isLogin === false && !isLoading) {
+      navigate("/");
+    } else {
+      if (state.user.status === "adm") {
+        navigate("/transactions");
+      } else if (state.user.status === "customer") {
+        navigate("/");
+      }
+    }
+  }, [state]);
+
 
 
   const checkUser = async () => {
@@ -52,7 +68,12 @@ function App() {
         setAuthToken(localStorage.token);
       }
       const response = await API.get("/check-auth");
-      console.log(response)
+
+      if (response.status === 404) {
+        return dispatch({
+          type: "AUTH_ERROR",
+        });
+      }
 
       // Get user data
       let payload = response.data.data;
@@ -64,10 +85,10 @@ function App() {
         type: "USER_SUCCESS",
         payload,
       });
-
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
-
+      setIsLoading(false);
     }
   };
 
@@ -83,7 +104,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         {/* <Route path="/" element={<PrivateRoute />}> */}
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/details" element={<Details />} />
+        <Route exact path="/details/:id" element={<Details />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/partner-profile" element={<PartnerProfileEl />} />
         <Route exact path="/edit-profile" element={<EditEl />} />

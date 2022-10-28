@@ -1,37 +1,84 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap'
 import { menus } from '../dataDummy/menus'
 import { CartContext } from './Contexts/CartContext';
+import { useQuery, useMutation } from 'react-query';
+import { API } from '../config/api';
+import { UserContext } from './Contexts/userContext';
+import emptyImage from "../images/emptyImage.svg"
+import Masonry from "react-masonry-css";
+import convertRupiah from "rupiah-format";
+import { useParams, useNavigate } from "react-router-dom"
+
+
+function ProductCard({ item }) {
+    return (
+
+        <Card style={{ width: '100%' }} className="my-3 p-2">
+            <Card.Img variant="top" style={{ width: '200px', height: '150px', objectFit: 'cover' }} src={item.image} className="mb-2" />
+
+            <Card.Body className='p-0'>
+                <Card.Title className='ff-abhaya f-18 fw-extra-bold'>{item.title}</Card.Title>
+                <Card.Text className='text-danger f-14 ff-avenir'>
+                    {convertRupiah.convert(item.price)}
+                </Card.Text>
+                <Button className='btn-full bg-yellow text-dark f-14 fw-extra-bold ff-avenir' >Order</Button>
+            </Card.Body>
+
+        </Card>
+
+    )
+}
 
 function MenusEl() {
 
-    const {cartCount, setCartCount} = useContext(CartContext) 
+    const { cartCount, setCartCount } = useContext(CartContext)
+    const params = useParams()
+    const navigate = useNavigate()
+
+
+    let { data: products } = useQuery('productsCache', async () => {
+        const response = await API.get(`/products/${params.id}`)
+        return response.data.data
+    })
+
+    console.log(products)
+    let { data: user } = useQuery('userCache', async () => {
+        const response = await API.get(`/user/${params.id}`)
+        return response.data.data
+    })
+
+
 
     return (
         <div className="container-grey">
             <Container className='p-5'>
-                <h3 className='mb-1 mt-3 ff-abhaya fw-extra-bold f-36 text-center text-lg-start'>Geprek Bensu, Menus</h3>
+                <h3 className='mb-1 mt-3 ff-abhaya fw-extra-bold f-36 text-center text-lg-start'>{user?.fullName}</h3>
                 <div className="d-flex">
-
-                    <Row className=''>
-
-                        {menus.map((menu, index) => (
-
-                            <Col key={index} className="col-12 col-md-6 col-lg-3 p-3">
-
-                                <Card style={{ width: '100%' }} className="my-3 p-2">
-                                    <Card.Img variant="top" src={menu.image} className="mb-2" />
-                                    <Card.Body className='p-0'>
-                                        <Card.Title className='ff-abhaya f-18 fw-extra-bold'>{menu.name}</Card.Title>
-                                        <Card.Text className='text-danger f-14 ff-avenir'>
-                                            {menu.price}
-                                        </Card.Text>
-                                        <Button className='btn-full bg-yellow text-dark f-14 fw-extra-bold ff-avenir' onClick={() => setCartCount(cartCount+1)}>Order</Button>
-                                    </Card.Body>
-                                </Card>
+                    <Row className="">
+                        {products?.length !== 0 ? (
+                            <>
+                                {products?.map((item, index) => (
+                                    <Col>
+                                        <ProductCard item={item} key={index} />
+                                    </Col>
+                                ))}
+                            </>
+                        ) : (
+                            <Col>
+                                <div className="text-center pt-5">
+                                    <img
+                                        src={emptyImage}
+                                        className="img-fluid"
+                                        style={{ width: "40%" }}
+                                        alt="empty"
+                                    />
+                                    <div className="mt-3">No data product</div>
+                                </div>
                             </Col>
-                        ))}
+                        )}
                     </Row>
+
                 </div>
             </Container>
         </div>

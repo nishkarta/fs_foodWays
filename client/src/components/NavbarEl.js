@@ -78,7 +78,7 @@ function NavbarEl() {
         <>
             <Navbar expand='lg' className='bg-yellow navbar h-nav' sticky='top' collapseOnSelect>
                 <Container>
-                    <Navbar.Brand onClick={handleNavigateToHome} href="#home" className='navbar-brand'>WaysFood  <img
+                    <Navbar.Brand onClick={handleNavigateToHome} className='navbar-brand'>WaysFood  <img
                         alt=""
                         src={logo}
                         width="50"

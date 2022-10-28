@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Col, Row, Card, Button } from "react-bootstrap";
-import { users } from "../dataDummy/users";
+// import { users } from "../dataDummy/users";
 import { transactions } from "../dataDummy/transactions";
 import waysdeliv from "../images/waysdeliv.png";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
+import { API } from "../config/api";
+
+import { UserContext } from "./Contexts/userContext";
 
 function ProfileEl() {
+  const [state, dispatch] = useContext(UserContext)
   const navigate = useNavigate();
   const handleNavigateToEdit = () => {
     navigate("/edit-profile");
   };
+
+  let { data: user } = useQuery('usersCache', async () => {
+    const response = await API.get(`/user/${state.user.id}`)
+    return response.data.data
+  })
 
   return (
     <div className="container-grey h-page">
@@ -20,48 +30,48 @@ function ProfileEl() {
               My Profile
             </h3>
             <div className="row">
-              {users.map((user, index) => (
-                <>
-                  <Col key={index} className=" col-12 col-sm-5 col-md-4">
-                    <div>
-                      <Card
-                        style={{ width: "100%" }}
-                        className=" container-grey border-0 mb-5"
+
+              <>
+                <Col className=" col-12 col-sm-5 col-md-4">
+                  <div>
+                    <Card
+                      style={{ width: "100%" }}
+                      className=" container-grey border-0 mb-5"
+                    >
+                      <Card.Img
+                        variant="top"
+                        src={user.image}
+                        className="rounded mb-3"
+                      />
+                      <Button
+                        className="btn-full btn-brown text-white fw-bold f-14 p-2"
+                        onClick={handleNavigateToEdit}
                       >
-                        <Card.Img
-                          variant="top"
-                          src={user.image}
-                          className="rounded mb-3"
-                        />
-                        <Button
-                          className="btn-full btn-brown text-white fw-bold f-14 p-2"
-                          onClick={handleNavigateToEdit}
-                        >
-                          Edit Profile
-                        </Button>
-                      </Card>
+                        Edit Profile
+                      </Button>
+                    </Card>
+                  </div>
+                </Col>
+                <Col className=" ff-avenir f-18">
+                  <div className="mx-3 text-center text-sm-start">
+                    <div className="">
+                      <h4 className="text-lighter-brown fw-bold f-18">
+                        Full Name
+                      </h4>
+                      <p>{user.fullName}</p>
                     </div>
-                  </Col>
-                  <Col className=" ff-avenir f-18">
-                    <div className="mx-3 text-center text-sm-start">
-                      <div className="">
-                        <h4 className="text-lighter-brown fw-bold f-18">
-                          Full Name
-                        </h4>
-                        <p>{user.fullName}</p>
-                      </div>
-                      <div>
-                        <h4 className="text-lighter-brown f-18">Email</h4>
-                        <p>{user.emailAddress}</p>
-                      </div>
-                      <div>
-                        <h4 className="text-lighter-brown f-18">Phone</h4>
-                        <p>{user.phoneNumber}</p>
-                      </div>
+                    <div>
+                      <h4 className="text-lighter-brown f-18">Email</h4>
+                      <p>{user.email}</p>
                     </div>
-                  </Col>
-                </>
-              ))}
+                    <div>
+                      <h4 className="text-lighter-brown f-18">Phone</h4>
+                      <p>{user.phone}</p>
+                    </div>
+                  </div>
+                </Col>
+              </>
+
             </div>
           </Col>
           <Col className="col-12 col-lg-5">

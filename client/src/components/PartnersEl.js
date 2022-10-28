@@ -1,13 +1,63 @@
 import Card from 'react-bootstrap/Card';
+import React, { useContext, useState } from 'react'
 
 // import List from './List';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { partners } from '../dataDummy/partners'
+import { useQuery } from 'react-query';
+import { API } from '../config/api';
+import emptyImage from "../images/emptyImage.svg"
+import { useNavigate } from 'react-router-dom';
+import LoginEl from '../Auth/LoginEl';
+import RegisterEl from '../Auth/RegisterEl';
+import { UserContext } from './Contexts/userContext';
 
+
+
+function PartnerCard({ item }) {
+    const navigate = useNavigate()
+
+    const [state] = useContext(UserContext);
+
+
+    const [showLog, setShowLog] = useState(false);
+    const [showReg, setShowReg] = useState(false);
+
+
+    const handleShowLog = () => {
+        setShowLog(true)
+    };
+
+    return (
+        <>
+
+            <Card onClick={state.isLogin ? () => navigate(`/details/${item.id}`) : handleShowLog} style={{ width: '100%' }} className="my-3 p-3 border-0">
+                <Row className='d-flex align-items-center'>
+                    <Col className='col-5'>
+                        <img src={item.image} style={{ width: '65px', height: '65px' }} className='' alt='dfdcv' />
+                    </Col>
+                    <Col className='col-7 ps-0'>
+                        <Card.Title className='ff-abhaya text-start fw-extra-bold f-24'>{item.fullName}</Card.Title>
+                    </Col>
+                </Row>
+
+            </Card>
+
+            <LoginEl showLog={showLog} setShowLog={setShowLog} setShowReg={setShowReg} />
+
+            <RegisterEl showReg={showReg} setShowReg={setShowReg} setShowLog={setShowLog} />
+        </>
+    )
+}
 
 function PartnersEl() {
+
+    let { data: users } = useQuery('usersCache', async () => {
+        const response = await API.get('/users')
+        return response.data.data
+    })
+
     return (
         <>
             <Container className='p-5'>
@@ -16,26 +66,35 @@ function PartnersEl() {
 
                     <Row className=''>
 
-                        {partners.map((partner, index) => (
+                        {users?.length !== 0 ? (
 
-                            <Col key={index} className="col-12 col-md-6 col-lg-3">
+                            <>
+                                {users?.map((item, index) => (item.role === "adm" &&
+                                    <Col className="col-12 col-md-6 col-lg-3">
+                                        <PartnerCard item={item} key={index} />
+                                    </Col>
+                                ))}
+                            </>
 
-                                <Card style={{ width: '100%' }} className="my-3 p-3 border-0">
-                                    <Row className='d-flex align-items-center'>
-                                        <Col className='col-5'>
-                                            <img src={partner.image} style={{ width: '65px', height: '65px' }} className='' alt='dfdcv' />
-                                        </Col>
-                                        <Col className='col-7 ps-0'>
-                                            <Card.Title className='ff-abhaya text-start fw-extra-bold f-24'>{partner.name}</Card.Title>
-                                        </Col>
-                                    </Row>
-
-                                </Card>
+                        ) : (
+                            <Col>
+                                <div className="text-center pt-5">
+                                    <img
+                                        src={emptyImage}
+                                        className="img-fluid"
+                                        style={{ width: "40%" }}
+                                        alt="empty"
+                                    />
+                                    <div className="mt-3">No data partner</div>
+                                </div>
                             </Col>
-                        ))}
+                        )}
                     </Row>
+
                 </div>
             </Container>
+
+
         </>
 
 

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Container, Form, Row, Col, Button } from 'react-bootstrap'
 import FormAll from './Atoms/FormAll'
 import file from '../images/file.png'
-import { useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
+import { UserContext } from './Contexts/userContext'
 
 import { useMutation } from 'react-query'
 
@@ -10,7 +11,9 @@ import { API } from '../config/api'
 
 
 function AddEl() {
+    // const params = useParams()
     const navigate = useNavigate()
+    const [state, dispatch] = useContext(UserContext)
 
     const [preview, setPreview] = useState(null)
 
@@ -47,7 +50,7 @@ function AddEl() {
                 }
             })
 
-            navigate("/details")
+            navigate(`/details/${state.user.id}`)
 
             console.log("ini add product", data)
 

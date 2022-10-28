@@ -16,6 +16,7 @@ function LoginEl({ showLog, setShowLog, setShowReg }) {
     document.title = 'Foodways | ' + title
 
     const [state, dispatch] = useContext(UserContext);
+    console.log(state)
 
     const [message, setMessage] = useState(null);
 

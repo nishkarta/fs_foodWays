@@ -42,7 +42,6 @@ function RegisterEl({ showReg, setShowReg, showLog, setShowLog }) {
     };
 
 
-
     const handleSubmit = useMutation(async (e) => {
         try {
             e.preventDefault()
@@ -56,6 +55,8 @@ function RegisterEl({ showReg, setShowReg, showLog, setShowLog }) {
             setMessage(alert);
 
             console.log("ini response register", response);
+            setShowReg(false)
+            setShowLog(true)
         } catch (err) {
             console.log(err);
             const alert = (
@@ -86,8 +87,8 @@ function RegisterEl({ showReg, setShowReg, showLog, setShowLog }) {
 
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <FloatingLabel label='Gender'>
-                                <Form.Select onChange={handleChange} name="gender" value={gender} aria-label="Default select example" className='bg-grey2 text-grey2 border-grey2'>
-                                    <option disabled>Select Gender</option>
+                                <Form.Select required onChange={handleChange} name="gender" value={gender} aria-label="Default select example" className='bg-grey2 text-grey2 border-grey2'>
+                                    <option hidden selected >Select Gender</option>
                                     <option value="m">Male</option>
                                     <option value="f">Female</option>
                                     <option value="o">Other</option>
@@ -101,8 +102,8 @@ function RegisterEl({ showReg, setShowReg, showLog, setShowLog }) {
 
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <FloatingLabel label='Login Type'>
-                                <Form.Select name="role" value={role} onChange={handleChange} aria-label="Default select example" className='bg-grey2 text-grey2 border-grey2'>
-                                    <option disabled>Select User Type</option>
+                                <Form.Select required name="role" value={role} onChange={handleChange} aria-label="Default select example" className='bg-grey2 text-grey2 border-grey2'>
+                                    <option hidden selected >Select User Type</option>
                                     <option value="cust">As Customer</option>
                                     <option value="adm">As Admin</option>
 
