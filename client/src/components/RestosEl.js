@@ -23,7 +23,7 @@ function RestoCard({ item }) {
 
     return (
         <>
-            <Card onClick={state.isLogin ? () => navigate('/details') : handleShowLog} style={{ width: '100%', cursor: 'pointer' }} className="my-3 p-2 border-0">
+            <Card onClick={state.isLogin ? () => navigate(`/details/${item.id}`) : handleShowLog} style={{ width: '100%', cursor: 'pointer' }} className="my-3 p-2 border-0">
                 <Card.Img variant="top" src={item.image} className='mb-3' />
                 <Card.Body className='p-0'>
                     <Card.Title className='ff-abhaya fw-extra-bold f-18 text-start'>{item.fullName}</Card.Title>
@@ -59,8 +59,8 @@ function RestosEl() {
 
                             <>
                                 {users?.map((item, index) => (item.role === "adm" &&
-                                    <Col className="col-12 col-md-6 col-lg-3">
-                                        <RestoCard item={item} key={index} />
+                                    <Col className="col-12 col-md-6 col-lg-3" key={index}>
+                                        <RestoCard item={item} />
                                     </Col>
                                 ))}
                             </>

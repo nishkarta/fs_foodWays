@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Col, Row, Card, Button } from "react-bootstrap";
 // import { users } from "../dataDummy/users";
 import { transactions } from "../dataDummy/transactions";
@@ -16,12 +16,30 @@ function ProfileEl() {
     navigate("/edit-profile");
   };
 
-  console.log(state)
 
-  let { data: user } = useQuery('userProfileCache', async () => {
+  const [user, setUser] = useState(null)
+  // console.log(state)
+  console.log(user);
+
+  const getUser = async () => {
     const response = await API.get(`/user/${state.user.id}`)
-    return response.data.data
-  })
+    console.log(response);
+    setUser(response.data.data)
+  }
+
+  // getUser()
+  useEffect(() => {
+
+    if (state.user) {
+      getUser()
+    }
+  }, [state])
+
+  // let { data: user, isLoading } = useQuery('userProfileCache', async () => {
+  //   const response = await API.get(`/user/${state.user.id}`)
+  //   console.log(isLoading);
+  //   return response.data.data
+  // })
 
   return (
     <div className="container-grey h-page">
@@ -82,8 +100,8 @@ function ProfileEl() {
             </h3>
 
             {transactions.map((trans, index) => (
-              <div className="d-flex bg-white justify-content-between align-items-center px-2 py-3 mb-4">
-                <div key={index} className="">
+              <div key={index} className="d-flex bg-white justify-content-between align-items-center px-2 py-3 mb-4">
+                <div className="">
                   <h6 className="ff-abhaya fw-extra-bold mb-1">
                     {trans.storeName}
                   </h6>

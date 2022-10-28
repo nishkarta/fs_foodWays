@@ -12,7 +12,7 @@ func UploadFile(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		file, _, err := r.FormFile("image")
 
-		if err != nil {
+		if err != nil && r.Method != "PATCH" {
 			fmt.Println(err)
 			json.NewEncoder(w).Encode("Error Retrieving the File")
 			return

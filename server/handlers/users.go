@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	dto "foodways/dto/result"
 	usersdto "foodways/dto/users"
 	"foodways/models"
@@ -143,7 +144,11 @@ func (h *handlerUser) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	dataContex := r.Context().Value("dataFile")
-	filename := dataContex.(string)
+	fmt.Print("sampe sini ga", dataContex)
+	filename := ""
+	if dataContex != nil {
+		filename = dataContex.(string)
+	}
 
 	request := usersdto.UpdateUserRequest{
 		FullName: r.FormValue("fullName"),

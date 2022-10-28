@@ -15,7 +15,7 @@ function ProductCard({ item }) {
     return (
 
         <Card style={{ width: '100%' }} className="my-3 p-2">
-            <Card.Img variant="top" style={{ width: '200px', height: '150px', objectFit: 'cover' }} src={item.image} className="mb-2" />
+            <Card.Img variant="top" style={{ width: '100%', height: '150px', objectFit: 'cover' }} src={item.image} className="mb-2" />
 
             <Card.Body className='p-0'>
                 <Card.Title className='ff-abhaya f-18 fw-extra-bold'>{item.title}</Card.Title>
@@ -59,8 +59,8 @@ function MenusEl() {
                         {products?.length !== 0 ? (
                             <>
                                 {products?.map((item, index) => (
-                                    <Col>
-                                        <ProductCard item={item} key={index} />
+                                    <Col key={index}>
+                                        <ProductCard item={item} />
                                     </Col>
                                 ))}
                             </>

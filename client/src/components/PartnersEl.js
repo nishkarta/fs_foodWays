@@ -35,7 +35,7 @@ function PartnerCard({ item }) {
             <Card onClick={state.isLogin ? () => navigate(`/details/${item.id}`) : handleShowLog} style={{ width: '100%' }} className="my-3 p-3 border-0">
                 <Row className='d-flex align-items-center'>
                     <Col className='col-5'>
-                        <img src={item.image} style={{ width: '65px', height: '65px' }} className='' alt='dfdcv' />
+                        <img src={item.image} style={{ width: '65px', height: '65px', objectFit: 'cover' }} className='rounded-circle' alt='dfdcv' />
                     </Col>
                     <Col className='col-7 ps-0'>
                         <Card.Title className='ff-abhaya text-start fw-extra-bold f-24'>{item.fullName}</Card.Title>
@@ -70,8 +70,8 @@ function PartnersEl() {
 
                             <>
                                 {users?.map((item, index) => (item.role === "adm" &&
-                                    <Col className="col-12 col-md-6 col-lg-3">
-                                        <PartnerCard item={item} key={index} />
+                                    <Col className="col-12 col-md-6 col-lg-3" key={index}>
+                                        <PartnerCard item={item} />
                                     </Col>
                                 ))}
                             </>
