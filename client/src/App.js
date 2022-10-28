@@ -36,11 +36,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [state, dispatch] = useContext(UserContext)
 
-  // const PrivateRoute = ({ element: Component, ...rest }) => {
-  //   const [state] = useContext(UserContext)
-
-  //   return state.isLogin ? <Outlet /> : <Navigate to="/" />;
-  // };
+  console.log(state)
 
   useEffect(() => {
     // Redirect Auth
@@ -50,13 +46,8 @@ function App() {
 
     if (state.isLogin === false && !isLoading) {
       navigate("/");
-    } else {
-      if (state.user.status === "adm") {
-        navigate("/transactions");
-      } else if (state.user.status === "customer") {
-        navigate("/");
-      }
     }
+
   }, [state]);
 
 
@@ -96,24 +87,33 @@ function App() {
     checkUser();
   }, []);
 
+
+  const PrivateRoute = () => {
+    return state.isLogin ? <Outlet /> : <Navigate to="/" />;
+  };
+
+
   return (
     <CartContext.Provider value={{ cartCount, setCartCount }}>
-
-      <NavbarEl />
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        {/* <Route path="/" element={<PrivateRoute />}> */}
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/details/:id" element={<Details />} />
-        <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="/partner-profile" element={<PartnerProfileEl />} />
-        <Route exact path="/edit-profile" element={<EditEl />} />
-        <Route exact path="/cart" element={<Cart />} />
-        <Route exact path="/add-product" element={<AddProduct />} />
-        <Route exact path="/transactions" element={<Transactions />} />
-        {/* </Route> */}
-      </Routes>
-
+      {isLoading ? <></>
+        :
+        <>
+          <NavbarEl />
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route path="/" element={<PrivateRoute />}>
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="/details/:id" element={<Details />} />
+              <Route exact path="/profile" element={<Profile />} />
+              <Route exact path="/partner-profile" element={<PartnerProfileEl />} />
+              <Route exact path="/edit-profile" element={<EditEl />} />
+              <Route exact path="/cart" element={<Cart />} />
+              <Route exact path="/add-product" element={<AddProduct />} />
+              <Route exact path="/transactions" element={<Transactions />} />
+            </Route>
+          </Routes>
+        </>
+      }
     </CartContext.Provider>
   );
 }
