@@ -16,7 +16,9 @@ function ProfileEl() {
     navigate("/edit-profile");
   };
 
-  let { data: user } = useQuery('usersCache', async () => {
+  console.log(state)
+
+  let { data: user } = useQuery('userProfileCache', async () => {
     const response = await API.get(`/user/${state.user.id}`)
     return response.data.data
   })
@@ -40,7 +42,7 @@ function ProfileEl() {
                     >
                       <Card.Img
                         variant="top"
-                        src={user.image}
+                        src={user?.image}
                         className="rounded mb-3"
                       />
                       <Button
@@ -58,15 +60,15 @@ function ProfileEl() {
                       <h4 className="text-lighter-brown fw-bold f-18">
                         Full Name
                       </h4>
-                      <p>{user.fullName}</p>
+                      <p>{user?.fullName}</p>
                     </div>
                     <div>
                       <h4 className="text-lighter-brown f-18">Email</h4>
-                      <p>{user.email}</p>
+                      <p>{user?.email}</p>
                     </div>
                     <div>
                       <h4 className="text-lighter-brown f-18">Phone</h4>
-                      <p>{user.phone}</p>
+                      <p>{user?.phone}</p>
                     </div>
                   </div>
                 </Col>

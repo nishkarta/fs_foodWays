@@ -38,7 +38,7 @@ function MenusEl() {
 
 
     let { data: products } = useQuery('productsCache', async () => {
-        const response = await API.get(`/products/${params.id}`)
+        const response = await API.get(`/products/${params.id ? params.id : user.id}`)
         return response.data.data
     })
 

@@ -52,6 +52,7 @@ function AddEl() {
 
             navigate(`/details/${state.user.id}`)
 
+
             console.log("ini add product", data)
 
         } catch (err) {

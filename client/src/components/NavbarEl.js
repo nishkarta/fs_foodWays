@@ -116,7 +116,7 @@ function NavbarEl() {
                                     <img src={pp2} alt='' />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item onClick={handleNavigateToProfilePartner}><img src={user} alt='' className='me-2'></img>
+                                    <Dropdown.Item onClick={handleNavigateToProfile}><img src={user} alt='' className='me-2'></img>
                                         Profile
                                     </Dropdown.Item>
                                     <Dropdown.Divider />
