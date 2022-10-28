@@ -13,7 +13,7 @@ func UserRoutes(r *mux.Router) {
 	userRepository := repositories.RepositoryUser(mysql.DB)
 	h := handlers.HandlerUser(userRepository)
 
-	r.HandleFunc("/users", middleware.Auth(h.FindUsers)).Methods("GET")
+	r.HandleFunc("/users", h.FindUsers).Methods("GET")
 	r.HandleFunc("/user/{id}", h.GetUser).Methods("GET")
 	r.HandleFunc("/restosproducts/{id}", middleware.Auth(h.GetRestosProduct)).Methods("GET")
 	r.HandleFunc("/user", middleware.UploadFile(h.CreateUser)).Methods("POST")

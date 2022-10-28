@@ -7,7 +7,6 @@ type Product struct {
 	Title     string              `json:"title" gorm:"type: varchar(255)"`
 	Image     string              `json:"image" gorm:"type: varchar(255)"`
 	Price     int                 `json:"price" gorm:"type:int"`
-	Stock     int                 `json:"-" form:"stock"`
 	UserID    int                 `json:"-"`
 	User      UserProfileResponse `json:"user" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	CreatedAt time.Time           `json:"-"`
@@ -28,7 +27,6 @@ type ProductUserResponse struct {
 	Title  string `json:"title"`
 	Image  string `json:"image"`
 	Price  int    `json:"price"`
-	Stock  int    `json:"-"`
 	UserID int    `json:"-"`
 }
 
@@ -36,7 +34,6 @@ type OrderResponse struct {
 	ID          int               `json:"id"`
 	Title       string            `json:"title"`
 	Image       string            `json:"image"`
-	Stock       int               `json:"stock"`
 	UserOrderID int               `json:"-"`
 	UserOrder   UserOrderResponse `json:"-"`
 }
