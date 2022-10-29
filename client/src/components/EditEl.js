@@ -8,18 +8,12 @@ import { useNavigate } from 'react-router-dom'
 import { API } from '../config/api'
 import { UserContext } from './Contexts/userContext'
 import { useQuery } from 'react-query'
+import MapEl from './MapEl'
 
 function EditEl() {
     const [state, dispatch] = useContext(UserContext)
     const [preview, setPreview] = useState(null)
-    const [showLoc, setShowLoc] = useState(false)
-    const handleShowLoc = () => {
-        setShowLoc(true)
-    }
-    const handleCloseLoc = () => {
-        setShowLoc(false)
-    }
-    console.log("state edit product", state)
+    const [showMap, setShowMap] = useState(false)
 
     const navigate = useNavigate()
 
@@ -36,13 +30,12 @@ function EditEl() {
         return response.data.data;
     });
 
-    console.log("ini data edit profile", user)
     useEffect(() => {
         if (user) {
             setPreview(user.image);
             setForm({
                 ...form,
-                fullName: user.fullNname,
+                fullName: user.fullName,
                 email: user.email,
                 phone: user.phone,
                 location: user.location,
@@ -82,7 +75,6 @@ function EditEl() {
             // Insert product data
             const response = await API.patch("/user/" + user.id, formData);
 
-            console.log("ini data updated user", response.data);
 
             navigate("/profile");
         } catch (error) {
@@ -140,7 +132,7 @@ function EditEl() {
                             </Col>
                             <Col>
                                 <Form.Group className="mb-3">
-                                    <Button type="button" className='btn-brown btn-full p-3 ff-avenir f-14 d-none d-md-block' onClick={handleShowLoc}>
+                                    <Button type="button" className='btn-brown btn-full p-3 ff-avenir f-14 d-none d-md-block' onClick={() => setShowMap(true)}>
                                         Select on Map <img src={map} alt='asfdfa'></img>
                                     </Button>
 
@@ -154,22 +146,12 @@ function EditEl() {
                         </Form.Group>
 
                     </Form>
-                    <div className="locationModal">
-                        <Modal show={showLoc} onHide={handleCloseLoc} size='xl' centered
-                        >
-
-                            <Modal.Header closeButton>
-
-                            </Modal.Header>
-                            <Modal.Body>
-                                <img src={myloc} alt='' style={{ width: '100%' }} />
-                            </Modal.Body>
-                        </Modal>
-                    </div>
 
 
                 </div>
             </Container>
+
+            <MapEl showMap={showMap} setShowMap={setShowMap} />
 
         </div >
 

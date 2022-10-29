@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 
 import { useNavigate } from "react-router-dom";
 
@@ -10,9 +10,11 @@ import logo from '../images/logo.svg';
 import cart from '../images/cart.png'
 import pp from '../images/cart (2).png'
 import pp2 from '../images/part.png'
-import user from '../images/user.png'
+import usericon from '../images/user.png'
 import logout from '../images/logout.png'
 import prods from '../images/prods.png'
+import userpp from "../images/defaultuserpp.jpg"
+
 
 import { CartContext } from './Contexts/CartContext';
 
@@ -20,6 +22,7 @@ import LoginEl from '../Auth/LoginEl';
 import RegisterEl from '../Auth/RegisterEl';
 
 import { UserContext } from './Contexts/userContext';
+import { API } from '../config/api';
 
 
 
@@ -35,6 +38,23 @@ function NavbarEl() {
 
     const [showLog, setShowLog] = useState(false);
     const [showReg, setShowReg] = useState(false);
+
+    const [user, setUser] = useState(null)
+
+    const getUser = async () => {
+        const response = await API.get(`/user/${state.user.id}`)
+        setUser(response.data.data)
+    }
+
+    useEffect(() => {
+
+        if (state.user) {
+            getUser()
+        }
+    }, [state])
+
+
+
 
     const handleShowLog = () => {
         setShowReg(false)
@@ -71,7 +91,7 @@ function NavbarEl() {
     }
 
 
-
+    console.log(state)
 
 
     return (
@@ -97,10 +117,10 @@ function NavbarEl() {
                                     </span>
 
                                     <Dropdown.Toggle variant="bg-yellow" id="dropdown-basic">
-                                        <img src={pp} alt='' />
+                                        <img src={user?.image ? user?.image : userpp} style={{ width: '70px', height: '70px', borderRadius: '50%' }} alt='' />
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
-                                        <Dropdown.Item onClick={handleNavigateToProfile}><img src={user} alt='' className='me-2'></img>
+                                        <Dropdown.Item onClick={handleNavigateToProfile}><img src={usericon} alt='' className='me-2'></img>
                                             Profile
                                         </Dropdown.Item>
                                         <Dropdown.Divider />
@@ -113,10 +133,10 @@ function NavbarEl() {
                             </div>) : (<Dropdown>
 
                                 <Dropdown.Toggle variant="bg-yellow" id="dropdown-basic">
-                                    <img src={pp2} alt='' />
+                                    <img src={user?.image ? user?.image : userpp} style={{ width: '70px', height: '70px', borderRadius: '50%' }} alt='' />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
-                                    <Dropdown.Item onClick={handleNavigateToProfile}><img src={user} alt='' className='me-2'></img>
+                                    <Dropdown.Item onClick={handleNavigateToProfile}><img src={usericon} alt='' className='me-2'></img>
                                         Profile
                                     </Dropdown.Item>
                                     <Dropdown.Divider />
@@ -124,6 +144,11 @@ function NavbarEl() {
                                         src={prods}
                                         alt='' className='me-2'
                                     />Add Products</Dropdown.Item>
+                                    <Dropdown.Divider />
+                                    <Dropdown.Item onClick={() => navigate(`/details/${state.user.id}`)}><img
+                                        src={prods}
+                                        alt='' className='me-2'
+                                    />My Products</Dropdown.Item>
                                     <Dropdown.Divider />
                                     <Dropdown.Item onClick={handleLogout}><img src={logout} alt='' className='me-2' />Logout</Dropdown.Item>
 

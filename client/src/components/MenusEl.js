@@ -11,7 +11,7 @@ import { useParams, useNavigate } from "react-router-dom"
 function ProductCard({ item }) {
     return (
 
-        <Card style={{ width: '100%' }} className="my-3 p-2">
+        <Card style={{ width: '13rem' }} className="my-3 p-2">
             <Card.Img variant="top" style={{ width: '100%', height: '150px', objectFit: 'cover' }} src={item.image} className="mb-2" />
 
             <Card.Body className='p-0'>
@@ -39,7 +39,6 @@ function MenusEl() {
         return response.data.data
     })
 
-    console.log(products)
     let { data: user } = useQuery('userCache', async () => {
         const response = await API.get(`/user/${params.id}`)
         return response.data.data
@@ -48,9 +47,9 @@ function MenusEl() {
 
 
     return (
-        <div className="container-grey">
+        <div className="container-grey h-page">
             <Container className='p-5'>
-                <h3 className='mb-1 mt-3 ff-abhaya fw-extra-bold f-36 text-center text-lg-start'>{user?.fullName}</h3>
+                <h3 className='mb-1 mt-3 ff-abhaya fw-extra-bold f-36 text-center text-lg-start'>{user?.fullName} Menus</h3>
                 <div className="d-flex">
                     <Row className="">
                         {products?.length !== 0 ? (

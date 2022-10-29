@@ -54,7 +54,6 @@ function RegisterEl({ showReg, setShowReg, showLog, setShowLog }) {
 
             setMessage(alert);
 
-            console.log("ini response register", response);
             setShowReg(false)
             setShowLog(true)
         } catch (err) {

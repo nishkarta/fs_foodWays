@@ -52,10 +52,8 @@ function LoginEl({ showLog, setShowLog, setShowReg }) {
 
             navigate("/");
 
-            console.log("isi payload", payload);
-            console.log("ini data login", data);
-        } catch (gusti) {
-            console.log(gusti);
+        } catch (err) {
+            console.log(err);
             const alert = <Alert variant="danger">Wrong Email/Password</Alert>;
 
             setMessage(alert);

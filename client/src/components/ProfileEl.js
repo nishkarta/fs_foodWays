@@ -6,6 +6,8 @@ import waysdeliv from "../images/waysdeliv.png";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { API } from "../config/api";
+import userpp from "../images/defaultuserpp.jpg"
+import restopp from "../images/defaultrestopp.jpg"
 
 import { UserContext } from "./Contexts/userContext";
 
@@ -17,13 +19,11 @@ function ProfileEl() {
   };
 
 
+
   const [user, setUser] = useState(null)
-  // console.log(state)
-  console.log(user);
 
   const getUser = async () => {
     const response = await API.get(`/user/${state.user.id}`)
-    console.log(response);
     setUser(response.data.data)
   }
 
@@ -34,6 +34,8 @@ function ProfileEl() {
       getUser()
     }
   }, [state])
+
+
 
   // let { data: user, isLoading } = useQuery('userProfileCache', async () => {
   //   const response = await API.get(`/user/${state.user.id}`)
@@ -58,9 +60,13 @@ function ProfileEl() {
                       style={{ width: "100%" }}
                       className=" container-grey border-0 mb-5"
                     >
-                      <Card.Img
-                        variant="top"
-                        src={user?.image}
+                      <Card.Img style={{ height: '200px', objectFit: 'cover' }}
+                        variant="top" alt="pp"
+                        src={user?.image ? user?.image : userpp}
+                        // onError={event => {
+                        //   event.target.src = { userpp }
+                        //   event.onerror = null
+                        // }}
                         className="rounded mb-3"
                       />
                       <Button
@@ -94,8 +100,11 @@ function ProfileEl() {
 
             </div>
           </Col>
-          <Col className="col-12 col-lg-5">
+
+          {state.user.role === "cust" ? <Col className="col-12 col-lg-5">
+
             <h3 className="mb-3 ff-abhaya f-36 fw-extra-bold text-center text-lg-start">
+
               Transaction History
             </h3>
 
@@ -128,6 +137,33 @@ function ProfileEl() {
               </div>
             ))}
           </Col>
+            : <Col className='col-12 col-lg-5'>
+
+
+              <h3 className='mb-3 ff-abhaya f-36 fw-extra-bold text-center text-lg-start'>Order Histories</h3>
+
+
+
+
+              {transactions.map((trans, index) => (
+                <div className="d-flex bg-white justify-content-between align-items-center px-2 py-3 mb-4">
+                  <div key={index} className="">
+                    <h6 className='ff-abhaya fw-extra-bold mb-1'>{trans.storeName}</h6>
+                    <p className='ff-avenir mb-2' style={{ fontSize: '10px' }}><span className='fw-bold'>Saturday, </span>{trans.date}</p>
+                    <p className='ff-avenir text-danger fw-bolder' style={{ fontSize: '11px' }}>Total {trans.total}</p>
+
+                  </div>
+                  <div key={index} className=' text-end'>
+                    <img src={waysdeliv} alt="" className='mb-1' />
+                    <button onClick={() => navigate('/transactions')} className='border-0 btn-green-trans float-right fw-bold f-11' style={{ width: '60%' }}><span>{trans.status}</span></button>
+                  </div>
+                </div>
+              ))}
+
+
+
+            </Col>
+          }
         </Row>
       </Container>
     </div>

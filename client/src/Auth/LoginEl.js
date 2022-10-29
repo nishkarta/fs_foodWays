@@ -44,7 +44,6 @@ function LoginEl({ showLog, setShowLog, setShowReg }) {
 
             let payload = data.data.data;
 
-            console.log("data login,", data)
 
             dispatch({
                 type: "LOGIN_SUCCESS",
@@ -54,8 +53,6 @@ function LoginEl({ showLog, setShowLog, setShowReg }) {
             navigate("/");
             setShowLog(false)
 
-            console.log("isi payload", payload);
-            console.log("ini data login", data);
         } catch (err) {
             console.log(err);
             const alert = <Alert variant="danger">Wrong Email/Password</Alert>;

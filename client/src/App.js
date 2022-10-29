@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/styles.css';
 import './styles/App.css';
 
+
 import NavbarEl from './components/NavbarEl';
 // import { LoginContext } from './components/Contexts/LoginContext';
 import { CartContext } from './components/Contexts/CartContext';
@@ -36,7 +37,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [state, dispatch] = useContext(UserContext)
 
-  console.log(state)
 
   useEffect(() => {
     // Redirect Auth

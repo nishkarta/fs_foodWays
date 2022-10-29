@@ -5,10 +5,14 @@ import map from '../images/map.png'
 import bin from '../images/bin.png'
 import loc from '../images/delloc.png'
 import otw from '../images/otw.png'
+import MapEl from './MapEl';
+
+import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 
 function CartsEl() {
-
     const [showLoc, setShowLoc] = useState(false)
+    const [showMap, setShowMap] = useState(false)
+
     const [showOtw, setShowOtw] = useState(false)
 
     const handleShowLoc = () => {
@@ -34,7 +38,7 @@ function CartsEl() {
                         <Form.Control type="text" placeholder="Enter location" className='p-2 border-0' />
                     </Form.Group>
                     <Form.Group className='col'>
-                        <Button className='btn-full btn-brown p-2 mb-3 f-14 fw-extra-bold' onClick={handleShowLoc}>
+                        <Button className='btn-full btn-brown p-2 mb-3 f-14 fw-extra-bold' onClick={() => setShowMap(true)}>
                             Select on Map <img src={map} alt='asfdfa'></img>
                         </Button>
                     </Form.Group>
@@ -139,7 +143,7 @@ function CartsEl() {
 
                             </Col>
                             <Form.Group className="mt-5 pt-lg-5 float-end col-12 col-lg-8">
-                                <Button type="button" className='btn-brown btn-full px-5 py-2 f-14 fw-extra-bold' onClick={handleShowOtw}>
+                                <Button type="button" className='btn-brown btn-full px-5 py-2 f-14 fw-extra-bold' onClick={() => setShowMap(true)}>
                                     Order
                                 </Button>
                             </Form.Group>
@@ -152,33 +156,7 @@ function CartsEl() {
                 </Row>
             </Container>
 
-            <div>
-
-                <div className="locationModal">
-                    <Modal show={showLoc} onHide={handleCloseLoc} size='xl' centered
- >
-        
-                        <Modal.Header closeButton>
-                        
-                        </Modal.Header>
-                        <Modal.Body>
-                              <img src={loc} alt='' style={{width:'100%'}} />
-                        </Modal.Body>
-                    </Modal>
-                </div>
-                <div className="otwModal">
-                <Modal show={showOtw} onHide={handleCloseOtw} size='xl' centered
- >
-        
-                        <Modal.Header closeButton>
-                        
-                        </Modal.Header>
-                        <Modal.Body>
-                              <img src={otw} alt='' style={{width:'100%'}} />
-                        </Modal.Body>
-                    </Modal>
-                </div>
-            </div>
+            <MapEl showMap={showMap} setShowMap={setShowMap} />
         </div >
     )
 }
