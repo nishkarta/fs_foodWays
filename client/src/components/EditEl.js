@@ -94,7 +94,7 @@ function EditEl() {
                     <Form onSubmit={(e) => handleSubmit(e)}>
                         <Row>
                             <Col className='col-12 col-lg-9'>
-                                <FormAll value={user ? user.fullName : state.user.fullName} name="fullName" onChange={handleChange} label="Full Name" type="text" placeholder="Full Name" className="mb-3  bg-grey2 border-grey3" />
+                                <FormAll value={form.fullName} name="fullName" onChange={handleChange} label="Full Name" type="text" placeholder="Full Name" className="mb-3  bg-grey2 border-grey3" />
                             </Col>
                             <Col>
                                 <Form.Group className="mb-3 p-1 rounded  bg-grey2 border-grey3" controlId="formBasicEmail" >
@@ -113,6 +113,7 @@ function EditEl() {
                                     )}
                                     <Form.Control name="image" onChange={handleChange} type="file" placeholder="Attach Image" hidden />
                                     <Form.Label className="d-flex justify-content-between btn-full align-items-center p-1">
+
                                         <div className=''>Attach Image </div>
                                         <div className=''>
                                             <img src={file} alt="" />
@@ -124,12 +125,12 @@ function EditEl() {
 
                         </Row>
 
-                        <FormAll name="email" onChange={handleChange} label="Email" type="email" placeholder="Email" className="mb-3 bg-grey2 border-grey3" />
-                        <FormAll name="phone" onChange={handleChange} label="Phone" type="tel" placeholder="Phone" className="mb-3 bg-grey2 border-grey3" />
+                        <FormAll value={form.email} name="email" onChange={handleChange} label="Email" type="email" placeholder="Email" className="mb-3 bg-grey2 border-grey3" />
+                        <FormAll value={form.phone} name="phone" onChange={handleChange} label="Phone" type="tel" placeholder="Phone" className="mb-3 bg-grey2 border-grey3" />
 
                         <Row className="mb-5">
                             <Col className='col-12 col-md-8 col-lg-9'>
-                                <FormAll name="location" onChange={handleChange} label="Location" type="text" placeholder="Location" className="mb-3 bg-grey2 border-grey3" />
+                                <FormAll value={form.location} name="location" onChange={handleChange} label="Location" type="text" placeholder="Location" className="mb-3 bg-grey2 border-grey3" />
                             </Col>
                             <Col>
                                 <Form.Group className="mb-3">

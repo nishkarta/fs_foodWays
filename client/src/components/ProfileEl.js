@@ -25,7 +25,6 @@ function ProfileEl() {
   const getUser = async () => {
     const response = await API.get(`/user/${state.user.id}`)
     setUser(response.data.data)
-    console.log(response.data.data)
   }
 
   // getUser()
