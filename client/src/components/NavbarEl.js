@@ -91,9 +91,6 @@ function NavbarEl() {
     }
 
 
-    console.log(state)
-
-
     return (
         <>
             <Navbar expand='lg' className='bg-yellow navbar h-nav' sticky='top' collapseOnSelect>

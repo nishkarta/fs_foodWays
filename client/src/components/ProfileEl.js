@@ -146,8 +146,8 @@ function ProfileEl() {
 
 
               {transactions.map((trans, index) => (
-                <div className="d-flex bg-white justify-content-between align-items-center px-2 py-3 mb-4">
-                  <div key={index} className="">
+                <div key={index} className="d-flex bg-white justify-content-between align-items-center px-2 py-3 mb-4">
+                  <div className="">
                     <h6 className='ff-abhaya fw-extra-bold mb-1'>{trans.storeName}</h6>
                     <p className='ff-avenir mb-2' style={{ fontSize: '10px' }}><span className='fw-bold'>Saturday, </span>{trans.date}</p>
                     <p className='ff-avenir text-danger fw-bolder' style={{ fontSize: '11px' }}>Total {trans.total}</p>

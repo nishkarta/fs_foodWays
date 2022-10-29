@@ -20,7 +20,6 @@ import EditEl from './components/EditEl';
 import Details from './pages/Details';
 import AddProduct from './pages/AddProduct';
 import Transactions from './pages/Transactions';
-import PartnerProfileEl from './components/Partners/PartnerProfileEl';
 
 import { Outlet, Navigate } from "react-router-dom";
 
@@ -105,7 +104,6 @@ function App() {
               <Route exact path="/" element={<Home />} />
               <Route exact path="/details/:id" element={<Details />} />
               <Route exact path="/profile" element={<Profile />} />
-              <Route exact path="/partner-profile" element={<PartnerProfileEl />} />
               <Route exact path="/edit-profile" element={<EditEl />} />
               <Route exact path="/cart" element={<Cart />} />
               <Route exact path="/add-product" element={<AddProduct />} />
