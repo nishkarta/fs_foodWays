@@ -115,7 +115,7 @@ function NavbarEl() {
                                     </span>
 
                                     <Dropdown.Toggle variant="bg-yellow" id="dropdown-basic">
-                                        <img src={user?.image !== "http://localhost:5000/uploads/" ? user?.image : user?.role === "adm" ? restopp : userpp} style={{ width: '70px', height: '70px', borderRadius: '50%' }} alt='' />
+                                        <img src={user?.image === "http://localhost:5000/uploads/" ? userpp : user?.image} style={{ width: '60px', height: '60px', borderRadius: '50%' }} alt='' />
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
                                         <Dropdown.Item onClick={handleNavigateToProfile}><img src={usericon} alt='' className='me-2'></img>
@@ -131,7 +131,7 @@ function NavbarEl() {
                             </div>) : (<Dropdown>
 
                                 <Dropdown.Toggle variant="bg-yellow" id="dropdown-basic">
-                                    <img src={user?.image !== "http://localhost:5000/uploads/" ? user?.image : user?.role === "adm" ? restopp : userpp} style={{ width: '70px', height: '70px', borderRadius: '50%' }} alt='' />
+                                    <img src={user?.image === "http://localhost:5000/uploads/" ? restopp : user?.image} style={{ width: '60px', height: '60px', borderRadius: '50%' }} alt='' />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     <Dropdown.Item onClick={handleNavigateToProfile}><img src={usericon} alt='' className='me-2'></img>

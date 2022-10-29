@@ -24,35 +24,24 @@ const LeafletGeocoder = () => {
 };
 
 const LeafletRoutingMachine = () => {
-    const [latitudeNow, setLatitudeNow] = useState('')
-    const [longitudeNow, setLongitudeNow] = useState('')
 
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            setLatitudeNow(position.coords.latitude)
-            setLongitudeNow(position.coords.longitude)
-        })
-
-    }, [])
-
-
-
+    // console.log(latitudeStarter, longitudeStarter)
     // const position = [latitudeNow, longitudeNow];
 
     const map = useMap();
     let DefaultIcon = L.icon({
-        iconUrl: "/marche.gif",
+        iconUrl: "https://raw.githubusercontent.com/youssef-of-web/leaflet-map/master/public/marche.gif",
         iconSize: [90, 90],
     });
     useEffect(() => {
-        var marker1 = L.marker([latitudeNow, longitudeNow], { icon: DefaultIcon }).addTo(
+        var marker1 = L.marker([-6.3817941, 106.749596], { icon: DefaultIcon }).addTo(
             map
         );
         map.on("click", function (e) {
             L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
             L.Routing.control({
                 waypoints: [
-                    L.latLng(latitudeNow, longitudeNow),
+                    L.latLng(-6.3817941, 106.749596),
                     L.latLng(e.latlng.lat, e.latlng.lng),
                 ],
                 lineOptions: {
@@ -113,13 +102,8 @@ function MapEl({ showMap, setShowMap }) {
                                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             />
-                            <Marker position={position}>
-                                <Popup>
-                                    You are here.
-                                </Popup>
-                            </Marker>
-                            <LeafletGeocoder />
-                            {/* <LeafletRoutingMachine /> */}
+                            {/*  <LeafletGeocoder /> */}
+                            <LeafletRoutingMachine />
                         </MapContainer>
                     </Modal.Body>
                 </Modal>

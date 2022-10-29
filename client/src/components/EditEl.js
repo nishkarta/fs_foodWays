@@ -83,7 +83,6 @@ function EditEl() {
         }
     };
 
-    console.log(user)
 
     return (
         <div className="container-grey h-page">
