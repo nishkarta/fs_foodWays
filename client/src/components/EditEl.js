@@ -44,6 +44,7 @@ function EditEl() {
 
     }, [user]);
 
+
     const handleChange = (e) => {
         setForm({
             ...form,
@@ -82,6 +83,7 @@ function EditEl() {
         }
     };
 
+    console.log(user)
 
     return (
         <div className="container-grey h-page">
@@ -93,7 +95,7 @@ function EditEl() {
                     <Form onSubmit={(e) => handleSubmit(e)}>
                         <Row>
                             <Col className='col-12 col-lg-9'>
-                                <FormAll name="fullName" onChange={handleChange} label="Full Name" type="text" placeholder="Full Name" className="mb-3  bg-grey2 border-grey3" />
+                                <FormAll value={user ? user.fullName : state.user.fullName} name="fullName" onChange={handleChange} label="Full Name" type="text" placeholder="Full Name" className="mb-3  bg-grey2 border-grey3" />
                             </Col>
                             <Col>
                                 <Form.Group className="mb-3 p-1 rounded  bg-grey2 border-grey3" controlId="formBasicEmail" >

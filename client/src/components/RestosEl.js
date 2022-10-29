@@ -26,7 +26,7 @@ function RestoCard({ item }) {
     return (
         <>
             <Card onClick={state.isLogin ? () => navigate(`/details/${item.id}`) : handleShowLog} style={{ width: '100%', cursor: 'pointer' }} className="my-3 p-2 border-0">
-                <Card.Img variant="top" src={item.image} className='mb-3' style={{ height: '200px', objectFit: 'cover' }} />
+                <Card.Img variant="top" src={item?.image !== "http://localhost:5000/uploads/" ? item?.image : restopp} className='mb-3' style={{ height: '200px', objectFit: 'cover' }} />
                 <Card.Body className='p-0'>
                     <Card.Title className='ff-abhaya fw-extra-bold f-18 text-start'>{item.fullName}</Card.Title>
                     <Card.Text className='ff-avenir f-14'>

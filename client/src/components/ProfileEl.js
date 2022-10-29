@@ -25,6 +25,7 @@ function ProfileEl() {
   const getUser = async () => {
     const response = await API.get(`/user/${state.user.id}`)
     setUser(response.data.data)
+    console.log(response.data.data)
   }
 
   // getUser()
@@ -62,7 +63,7 @@ function ProfileEl() {
                     >
                       <Card.Img style={{ height: '200px', objectFit: 'cover' }}
                         variant="top" alt="pp"
-                        src={user?.image ? user?.image : userpp}
+                        src={user?.image !== "http://localhost:5000/uploads/" ? user?.image : user?.role === "adm" ? restopp : userpp}
                         // onError={event => {
                         //   event.target.src = { userpp }
                         //   event.onerror = null

@@ -14,6 +14,7 @@ import usericon from '../images/user.png'
 import logout from '../images/logout.png'
 import prods from '../images/prods.png'
 import userpp from "../images/defaultuserpp.jpg"
+import restopp from "../images/defaultrestopp.jpg"
 
 
 import { CartContext } from './Contexts/CartContext';
@@ -114,7 +115,7 @@ function NavbarEl() {
                                     </span>
 
                                     <Dropdown.Toggle variant="bg-yellow" id="dropdown-basic">
-                                        <img src={user?.image ? user?.image : userpp} style={{ width: '70px', height: '70px', borderRadius: '50%' }} alt='' />
+                                        <img src={user?.image !== "http://localhost:5000/uploads/" ? user?.image : user?.role === "adm" ? restopp : userpp} style={{ width: '70px', height: '70px', borderRadius: '50%' }} alt='' />
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
                                         <Dropdown.Item onClick={handleNavigateToProfile}><img src={usericon} alt='' className='me-2'></img>
@@ -130,7 +131,7 @@ function NavbarEl() {
                             </div>) : (<Dropdown>
 
                                 <Dropdown.Toggle variant="bg-yellow" id="dropdown-basic">
-                                    <img src={user?.image ? user?.image : userpp} style={{ width: '70px', height: '70px', borderRadius: '50%' }} alt='' />
+                                    <img src={user?.image !== "http://localhost:5000/uploads/" ? user?.image : user?.role === "adm" ? restopp : userpp} style={{ width: '70px', height: '70px', borderRadius: '50%' }} alt='' />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     <Dropdown.Item onClick={handleNavigateToProfile}><img src={usericon} alt='' className='me-2'></img>

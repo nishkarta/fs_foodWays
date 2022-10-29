@@ -13,6 +13,8 @@ import LoginEl from '../Auth/LoginEl';
 import RegisterEl from '../Auth/RegisterEl';
 import { UserContext } from './Contexts/userContext';
 
+import restopp from "../images/defaultrestopp.jpg"
+
 
 
 function PartnerCard({ item }) {
@@ -35,7 +37,7 @@ function PartnerCard({ item }) {
             <Card onClick={state.isLogin ? () => navigate(`/details/${item.id}`) : handleShowLog} style={{ width: '100%' }} className="my-3 p-3 border-0">
                 <Row className='d-flex align-items-center'>
                     <Col className='col-5'>
-                        <img src={item.image} style={{ width: '65px', height: '65px', objectFit: 'cover' }} className='rounded-circle' alt='dfdcv' />
+                        <img src={item?.image !== "http://localhost:5000/uploads/" ? item?.image : restopp} style={{ width: '65px', height: '65px', objectFit: 'cover' }} className='rounded-circle' alt='dfdcv' />
                     </Col>
                     <Col className='col-7 ps-0'>
                         <Card.Title className='ff-abhaya text-start fw-extra-bold f-24'>{item.fullName}</Card.Title>
