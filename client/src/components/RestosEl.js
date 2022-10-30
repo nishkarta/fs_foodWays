@@ -68,16 +68,21 @@ function RestosEl() {
                             </>
 
                         ) : (
-                            <Col>
-                                <div className="text-center pt-5">
-                                    <img
-                                        src={emptyImage}
-                                        className="img-fluid"
-                                        style={{ width: "40%" }}
-                                        alt="empty"
-                                    />
-                                    <div className="mt-3">No data resto</div>
-                                </div>
+                            // <Col>
+                            //     <div className="text-center pt-5">
+                            //         <img
+                            //             src={emptyImage}
+                            //             className="img-fluid"
+                            //             style={{ width: "40%" }}
+                            //             alt="empty"
+                            //         />
+                            //         <div className="mt-3">No data resto</div>
+                            //     </div>
+                            // </Col>
+
+                            <Col className='d-flex flex-column justify-content-center align-items-center'>
+                                <img alt="" src={emptyImage} width='200px' />
+                                <h1>Whoops!!, No data resto!! :( </h1>
                             </Col>
                         )}
 

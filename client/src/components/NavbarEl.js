@@ -8,8 +8,6 @@ import { Badge, Container, Navbar, Button, Dropdown } from 'react-bootstrap'
 
 import logo from '../images/logo.svg';
 import cart from '../images/cart.png'
-import pp from '../images/cart (2).png'
-import pp2 from '../images/part.png'
 import usericon from '../images/user.png'
 import logout from '../images/logout.png'
 import prods from '../images/prods.png'
@@ -18,6 +16,7 @@ import restopp from "../images/defaultrestopp.jpg"
 
 
 import { CartContext } from './Contexts/CartContext';
+import { useQuery } from 'react-query';
 
 import LoginEl from '../Auth/LoginEl';
 import RegisterEl from '../Auth/RegisterEl';
@@ -35,13 +34,12 @@ function NavbarEl() {
 
     const [state, dispatch] = useContext(UserContext);
 
-    const { cartCount } = useContext(CartContext)
-
     const [showLog, setShowLog] = useState(false);
     const [showReg, setShowReg] = useState(false);
 
     const [user, setUser] = useState(null)
 
+    const { cartLength, setCartLength } = useContext(CartContext);
     const getUser = async () => {
         const response = await API.get(`/user/${state.user.id}`)
         setUser(response.data.data)
@@ -54,6 +52,23 @@ function NavbarEl() {
         }
     }, [state])
 
+    const { data: cartData, refetch: getCartLength } = useQuery(
+        'cartCache',
+        async () => {
+            try {
+                const response = await API.get('/carts');
+                return response.data.data;
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    );
+
+
+    useEffect(() => {
+        getCartLength();
+        // refetch();
+    }, [cartData]);
 
 
 
@@ -81,9 +96,6 @@ function NavbarEl() {
     const handleNavigateToProfile = () => {
         navigate("/profile");
     };
-    const handleNavigateToProfilePartner = () => {
-        navigate("/partner-profile");
-    };
     const handleNavigateToCart = () => {
         navigate("/cart")
     }
@@ -96,7 +108,7 @@ function NavbarEl() {
         <>
             <Navbar expand='lg' className='bg-yellow navbar h-nav' sticky='top' collapseOnSelect>
                 <Container>
-                    <Navbar.Brand onClick={handleNavigateToHome} className='navbar-brand'>WaysFood  <img
+                    <Navbar.Brand style={{ cursor: 'pointer' }} onClick={handleNavigateToHome} className='navbar-brand'>WaysFood  <img
                         alt=""
                         src={logo}
                         width="50"
@@ -110,7 +122,7 @@ function NavbarEl() {
                             <Button className='btn btn-brown text-white' onClick={handleShowLog}>Login</Button></>) : state.user.role === 'cust' ? (<div>
                                 <Dropdown>
                                     <span >
-                                        <img src={cart} alt='' onClick={handleNavigateToCart} className='me-0' style={{}} /> <Badge bg="danger" style={{ position: 'relative', borderRadius: '50%', width: '20px', height: '20px', left: '-14px', top: '-4px' }}><span style={{ position: 'relative', right: '1px', top: '-1px' }}>{cartCount}</span></Badge>
+                                        <img style={{ cursor: 'pointer' }} src={cart} alt='' onClick={handleNavigateToCart} className='me-0' />{cartData?.length !== 0 && (<Badge bg="danger" style={{ position: 'relative', borderRadius: '50%', width: '20px', height: '20px', left: '-14px', top: '-4px' }}><span style={{ position: 'relative', right: '1px', top: '-1px' }}>{cartData?.length}</span></Badge>)}
 
                                     </span>
 
@@ -131,7 +143,7 @@ function NavbarEl() {
                             </div>) : (<Dropdown>
 
                                 <Dropdown.Toggle variant="bg-yellow" id="dropdown-basic">
-                                    <img src={user?.image === "http://localhost:5000/uploads/" ? restopp : user?.image} style={{ width: '60px', height: '60px', borderRadius: '50%' }} alt='' />
+                                    <img src={user?.image === "http://localhost:5000/uploads/" ? restopp : user?.image} style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover' }} alt='' />
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     <Dropdown.Item onClick={handleNavigateToProfile}><img src={usericon} alt='' className='me-2'></img>
@@ -141,13 +153,13 @@ function NavbarEl() {
                                     <Dropdown.Item onClick={handleNavigateToAddProduct}><img
                                         src={prods}
                                         alt='' className='me-2'
-                                    />Add Products</Dropdown.Item>
+                                    />My Products</Dropdown.Item>
                                     <Dropdown.Divider />
-                                    <Dropdown.Item onClick={() => navigate(`/details/${state.user.id}`)}><img
+                                    {/* <Dropdown.Item onClick={() => navigate(`/details/${state.user.id}`)}><img
                                         src={prods}
                                         alt='' className='me-2'
                                     />My Products</Dropdown.Item>
-                                    <Dropdown.Divider />
+                                    <Dropdown.Divider /> */}
                                     <Dropdown.Item onClick={handleLogout}><img src={logout} alt='' className='me-2' />Logout</Dropdown.Item>
 
 

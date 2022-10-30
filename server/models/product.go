@@ -7,6 +7,7 @@ type Product struct {
 	Title     string              `json:"title" gorm:"type: varchar(255)"`
 	Image     string              `json:"image" gorm:"type: varchar(255)"`
 	Price     int                 `json:"price" gorm:"type:int"`
+	Qty       int                 `json:"qty" gorm:"type:int"`
 	UserID    int                 `json:"-"`
 	User      UserProfileResponse `json:"user" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	CreatedAt time.Time           `json:"-"`
@@ -17,7 +18,7 @@ type ProductResponse struct {
 	Title  string              `json:"title"`
 	Image  string              `json:"image"`
 	Price  int                 `json:"price"`
-	Stock  int                 `json:"-" form:"stock"`
+	Qty    int                 `json:"qty"`
 	UserID int                 `json:"-"`
 	User   UserProfileResponse `json:"user"`
 }
@@ -27,15 +28,18 @@ type ProductUserResponse struct {
 	Title  string `json:"title"`
 	Image  string `json:"image"`
 	Price  int    `json:"price"`
+	Qty    int    `json:"qty"`
 	UserID int    `json:"-"`
 }
 
 type OrderResponse struct {
-	ID          int               `json:"id"`
-	Title       string            `json:"title"`
-	Image       string            `json:"image"`
-	UserOrderID int               `json:"-"`
-	UserOrder   UserOrderResponse `json:"-"`
+	ID            int           `json:"id"`
+	Title         string        `json:"title"`
+	Image         string        `json:"image"`
+	Price         int           `json:"price"`
+	Qty           int           `json:"qty"`
+	BuyerID       int           `json:"-"`
+	BuyerResponse BuyerResponse `json:"buyer"`
 }
 
 func (ProductResponse) TableName() string {

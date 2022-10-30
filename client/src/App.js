@@ -20,6 +20,7 @@ import EditEl from './components/EditEl';
 import Details from './pages/Details';
 import AddProduct from './pages/AddProduct';
 import Transactions from './pages/Transactions';
+import EditProduct from './components/EditProduct';
 
 import { Outlet, Navigate } from "react-router-dom";
 
@@ -107,6 +108,7 @@ function App() {
               <Route exact path="/edit-profile" element={<EditEl />} />
               <Route exact path="/cart" element={<Cart />} />
               <Route exact path="/add-product" element={<AddProduct />} />
+              <Route exact path="/edit-product/:id" element={<EditProduct />} />
               <Route exact path="/transactions" element={<Transactions />} />
             </Route>
           </Routes>

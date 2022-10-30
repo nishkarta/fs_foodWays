@@ -1,27 +1,27 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { Alert, Modal, Form, Button } from 'react-bootstrap'
-import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
+import React, { useState, useEffect } from 'react'
+import { Modal } from 'react-bootstrap'
+import { MapContainer, TileLayer, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
 import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
-const LeafletGeocoder = () => {
-    const map = useMap();
-    useEffect(() => {
-        L.Control.geocoder({
-            defaultMarkGeocode: false,
-        })
-            .on("markgeocode", function (e) {
-                var latlng = e.geocode.center;
-                L.marker(latlng).addTo(map).bindPopup(e.geocode.name).openPopup();
-                map.fitBounds(e.geocode.bbox);
-            })
-            .addTo(map);
-    }, []);
-    return null;
-};
+// const LeafletGeocoder = () => {
+//     const map = useMap();
+//     useEffect(() => {
+//         L.Control.geocoder({
+//             defaultMarkGeocode: false,
+//         })
+//             .on("markgeocode", function (e) {
+//                 var latlng = e.geocode.center;
+//                 L.marker(latlng).addTo(map).bindPopup(e.geocode.name).openPopup();
+//                 map.fitBounds(e.geocode.bbox);
+//             })
+//             .addTo(map);
+//     }, []);
+//     return null;
+// };
 
 const LeafletRoutingMachine = () => {
 

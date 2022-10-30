@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Container, Form, Row, Col, Button, Modal } from 'react-bootstrap'
+import { Container, Form, Row, Col, Button } from 'react-bootstrap'
 import map from '../images/map.png'
 import file from '../images/file.png'
 import FormAll from './Atoms/FormAll'
-import myloc from '../images/myloc.png'
 import { useNavigate } from 'react-router-dom'
 import { API } from '../config/api'
 import { UserContext } from './Contexts/userContext'
@@ -11,7 +10,20 @@ import { useQuery } from 'react-query'
 import MapEl from './MapEl'
 
 function EditEl() {
-    const [state, dispatch] = useContext(UserContext)
+    const [latitudeNow, setLatitudeNow] = useState('')
+    const [longitudeNow, setLongitudeNow] = useState('')
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            setLatitudeNow(position.coords.latitude)
+            setLongitudeNow(position.coords.longitude)
+        })
+
+    }, [])
+
+    const position = [latitudeNow, longitudeNow];
+
+    const [state] = useContext(UserContext)
     const [preview, setPreview] = useState(null)
     const [showMap, setShowMap] = useState(false)
 
@@ -130,7 +142,7 @@ function EditEl() {
 
                         <Row className="mb-5">
                             <Col className='col-12 col-md-8 col-lg-9'>
-                                <FormAll value={form.location} name="location" onChange={handleChange} label="Location" type="text" placeholder="Location" className="mb-3 bg-grey2 border-grey3" />
+                                <FormAll value={form.location ? form.location : position} name="location" onChange={handleChange} label="Location" type="text" placeholder="Location" className="mb-3 bg-grey2 border-grey3" />
                             </Col>
                             <Col>
                                 <Form.Group className="mb-3">

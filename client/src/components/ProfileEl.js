@@ -4,7 +4,6 @@ import { Container, Col, Row, Card, Button } from "react-bootstrap";
 import { transactions } from "../dataDummy/transactions";
 import waysdeliv from "../images/waysdeliv.png";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
 import { API } from "../config/api";
 import userpp from "../images/defaultuserpp.jpg"
 import restopp from "../images/defaultrestopp.jpg"
@@ -12,7 +11,7 @@ import restopp from "../images/defaultrestopp.jpg"
 import { UserContext } from "./Contexts/userContext";
 
 function ProfileEl() {
-  const [state, dispatch] = useContext(UserContext)
+  const [state] = useContext(UserContext)
   const navigate = useNavigate();
   const handleNavigateToEdit = () => {
     navigate("/edit-profile");

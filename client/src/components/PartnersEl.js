@@ -34,7 +34,7 @@ function PartnerCard({ item }) {
     return (
         <>
 
-            <Card onClick={state.isLogin ? () => navigate(`/details/${item.id}`) : handleShowLog} style={{ width: '100%' }} className="my-3 p-3 border-0">
+            <Card onClick={state.isLogin ? () => navigate(`/details/${item.id}`) : handleShowLog} style={{ width: '100%', cursor: 'pointer' }} className="my-3 p-3 border-0">
                 <Row className='d-flex align-items-center'>
                     <Col className='col-5'>
                         <img src={item?.image !== "http://localhost:5000/uploads/" ? item?.image : restopp} style={{ width: '65px', height: '65px', objectFit: 'cover' }} className='rounded-circle' alt='dfdcv' />
@@ -79,16 +79,20 @@ function PartnersEl() {
                             </>
 
                         ) : (
-                            <Col>
-                                <div className="text-center pt-5">
-                                    <img
-                                        src={emptyImage}
-                                        className="img-fluid"
-                                        style={{ width: "40%" }}
-                                        alt="empty"
-                                    />
-                                    <div className="mt-3">No data partner</div>
-                                </div>
+                            // <Col>
+                            //     <div className="text-center pt-5">
+                            //         <img
+                            //             src={emptyImage}
+                            //             className="img-fluid"
+                            //             style={{ width: "40%" }}
+                            //             alt="empty"
+                            //         />
+                            //         <div className="mt-3">No data partner</div>
+                            //     </div>
+                            // </Col>
+                            <Col className='d-flex flex-column justify-content-center align-items-center'>
+                                <img alt="" src={emptyImage} width='200px' />
+                                <h1>Whoops!!, No data partner!! :( </h1>
                             </Col>
                         )}
                     </Row>

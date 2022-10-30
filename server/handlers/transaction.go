@@ -73,10 +73,12 @@ func (h *handlerTransaction) AddTransaction(w http.ResponseWriter, r *http.Reque
 	}
 
 	transaction := models.Transaction{
-		UserOrderID: userId,
-		Status:      request.Status,
-		OrderID:     request.OrderID,
-		Qty:         request.Qty,
+		BuyerID:   userId,
+		SellerID:  request.SellerID,
+		Status:    "pending",
+		ProductID: request.ProductID,
+		Qty:       request.Qty,
+		Price:     request.Price,
 	}
 
 	validation := validator.New()
@@ -127,12 +129,15 @@ func (h *handlerTransaction) UpdateTransaction(w http.ResponseWriter, r *http.Re
 		transaction.Status = request.Status
 	}
 
-	if request.OrderID != 0 {
-		transaction.OrderID = request.OrderID
+	if request.ProductID != 0 {
+		transaction.ProductID = request.ProductID
 	}
 
 	if request.Qty != 0 {
 		transaction.Qty = request.Qty
+	}
+	if request.Price != 0 {
+		transaction.Qty = request.Price
 	}
 
 	data, err := h.TransactionRepository.UpdateTransaction(transaction, id)
@@ -177,10 +182,12 @@ func (h *handlerTransaction) DeleteTransaction(w http.ResponseWriter, r *http.Re
 
 func convertResponseTransaction(u models.Transaction) models.TransactionResponse {
 	return models.TransactionResponse{
-		UserOrder: u.UserOrder,
-		Status:    u.Status,
-		Order:     u.Order,
-		Qty:       u.Qty,
+		Buyer:   u.Buyer,
+		Seller:  u.Seller,
+		Status:  u.Status,
+		Product: u.Product,
+		Qty:     u.Qty,
+		Price:   u.Price,
 	}
 }
 

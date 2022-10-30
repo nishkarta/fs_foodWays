@@ -114,6 +114,7 @@ func (h *handlerProduct) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	product := models.Product{
 		Title:  request.Title,
 		Price:  request.Price,
+		Qty:    1,
 		Image:  filename,
 		UserID: userId,
 	}
@@ -163,6 +164,9 @@ func (h *handlerProduct) UpdateProduct(w http.ResponseWriter, r *http.Request) {
 	if request.Price != 0 {
 		product.Price = request.Price
 	}
+	// if request.Qty != 0 {
+	// 	product.Qty = request.Qty
+	// }
 	if request.Image != "" {
 		product.Image = request.Image
 	}
@@ -211,6 +215,7 @@ func convertResponseProduct(u models.Product) models.ProductResponse {
 	return models.ProductResponse{
 		Title: u.Title,
 		Price: u.Price,
+		Qty:   u.Qty,
 		Image: u.Image,
 		User:  u.User,
 	}
