@@ -12,10 +12,13 @@ import convertRupiah from "rupiah-format";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
 import { useQuery } from 'react-query';
 import { API } from '../config/api';
+import { useNavigate } from 'react-router-dom';
 
 function CartsEl() {
+    const navigate = useNavigate()
     const { cartLength, setCartLength } = useContext(CartContext);
 
+    const [showResponse, setShowResponse] = useState(false)
     const [showMap, setShowMap] = useState(false)
     const [latitudeNow, setLatitudeNow] = useState('')
     const [longitudeNow, setLongitudeNow] = useState('')
@@ -245,7 +248,7 @@ function CartsEl() {
 
                             </Col>
                             <Form.Group className="mt-5 pt-lg-5 float-end col-12 col-lg-8">
-                                <Button type="button" className='btn-brown btn-full px-5 py-2 f-14 fw-extra-bold' onClick={() => setShowMap(true)}>
+                                <Button type="button" className='btn-brown btn-full px-5 py-2 f-14 fw-extra-bold' onClick={() => setShowResponse(true)}>
                                     Order
                                 </Button>
                             </Form.Group>
@@ -260,6 +263,19 @@ function CartsEl() {
             </Container>
 
             <MapEl showMap={showMap} setShowMap={setShowMap} />
+
+            <Modal show={showResponse} onHide={() => setShowResponse(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title className='text-yellow fs-1' >Congratulation!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Order Succedeed..
+                </Modal.Body>
+                <Modal.Footer>
+                    <span className='fw-bold' style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>back to home</span>
+                </Modal.Footer>
+            </Modal>
+
         </div >
     )
 }
