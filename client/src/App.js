@@ -94,7 +94,8 @@ function App() {
 
 
   return (
-    <CartContext.Provider value={{ cartCount, setCartCount }}>
+    <>
+
       {isLoading ? <></>
         :
         <>
@@ -114,7 +115,8 @@ function App() {
           </Routes>
         </>
       }
-    </CartContext.Provider>
+    </>
+
   );
 }
 
