@@ -72,6 +72,7 @@ function CartsEl() {
 
     const allCartPrice = cartData?.map((item) => item.product.price * item.qty);
     const subTotal = allCartPrice?.reduce((a, b) => a + b, 0);
+    const allQty = cartData?.map(p => p.qty).reduce((a, b) => a += b, 0)
     console.log(subTotal);
     useEffect(() => {
         refetch()
@@ -215,7 +216,7 @@ function CartsEl() {
                                         <Col className='ff-abhaya'>
                                             <h6 className='f-14'>Qty</h6>
                                         </Col>
-                                        <Col className='col-4 text-end ff-avenir'><h6 className='f-14'>3</h6>
+                                        <Col className='col-4 text-end ff-avenir'><h6 className='f-14'>{allQty}</h6>
                                         </Col>
                                     </Row>
                                     <Row className='d-flex align-items-center text-start'>
