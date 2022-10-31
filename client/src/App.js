@@ -4,7 +4,6 @@ import './styles/App.css';
 
 
 import NavbarEl from './components/NavbarEl';
-// import { LoginContext } from './components/Contexts/LoginContext';
 import { CartContext } from './components/Contexts/CartContext';
 
 import { UserContext } from './components/Contexts/userContext';
