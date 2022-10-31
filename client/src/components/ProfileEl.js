@@ -9,6 +9,10 @@ import userpp from "../images/defaultuserpp.jpg"
 import restopp from "../images/defaultrestopp.jpg"
 
 import { UserContext } from "./Contexts/userContext";
+import { CartContext } from "./Contexts/CartContext";
+import { useQuery } from "react-query";
+import convertRupiah from "rupiah-format";
+
 
 function ProfileEl() {
   const [state] = useContext(UserContext)
@@ -16,8 +20,24 @@ function ProfileEl() {
   const handleNavigateToEdit = () => {
     navigate("/edit-profile");
   };
+  const { cartLength, setCartLength } = useContext(CartContext);
 
+  const { data: cartData, refetch } = useQuery('cartCache', async () => {
+    try {
+      const response = await API.get('/carts')
+      return response.data.data
+    } catch (err) {
+      console.log(err)
+    }
+  })
 
+  const allCartPrice = cartData?.map((item) => item.product.price * item.qty);
+  const subTotal = allCartPrice?.reduce((a, b) => a + b, 0);
+  const allQty = cartData?.map(p => p.qty).reduce((a, b) => a += b, 0)
+  console.log(subTotal);
+  useEffect(() => {
+    refetch()
+  }, [])
 
   const [user, setUser] = useState(null)
 
@@ -107,34 +127,39 @@ function ProfileEl() {
               Transaction History
             </h3>
 
-            {transactions.map((trans, index) => (
-              <div key={index} className="d-flex bg-white justify-content-between align-items-center px-2 py-3 mb-4">
+            {cartData?.length > 0 && (
+
+
+              <div className="d-flex bg-white justify-content-between align-items-center px-2 py-3 mb-4">
                 <div className="">
                   <h6 className="ff-abhaya fw-extra-bold mb-1">
-                    {trans.storeName}
+                    Resto 1
                   </h6>
                   <p className="ff-avenir mb-2" style={{ fontSize: "10px" }}>
-                    <span className="fw-bold">Saturday, </span>
-                    {trans.date}
+                    <span className="fw-bold">Sunday, </span>
+                    31 October 2022
                   </p>
                   <p
                     className="ff-avenir text-danger fw-bolder"
                     style={{ fontSize: "11px" }}
                   >
-                    Total {trans.total}
+                    Total {convertRupiah.convert(subTotal + 10000)}
                   </p>
                 </div>
-                <div key={index} className=" text-end">
+                <div className=" text-end">
                   <img src={waysdeliv} alt="" className="mb-1" />
                   <button
                     className="border-0 btn-green-trans float-right fw-bold f-11"
                     style={{ width: "60%" }}
                   >
-                    <span>{trans.status}</span>
+                    <span>finished</span>
                   </button>
                 </div>
               </div>
-            ))}
+
+
+            )}
+
           </Col>
             : <Col className='col-12 col-lg-5'>
 

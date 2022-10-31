@@ -25,11 +25,6 @@ import EditProduct from './components/EditProduct';
 import { Outlet, Navigate } from "react-router-dom";
 
 
-
-// if (localStorage.token) {
-//   setAuthToken(localStorage.token);
-// }
-
 function App() {
   let navigate = useNavigate();
 
@@ -37,9 +32,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [state, dispatch] = useContext(UserContext)
 
+  document.title = 'Foodways | Online Resto'
+
 
   useEffect(() => {
-    // Redirect Auth
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
@@ -54,7 +50,6 @@ function App() {
 
   const checkUser = async () => {
     try {
-
       if (localStorage.token) {
         setAuthToken(localStorage.token);
       }
@@ -66,12 +61,11 @@ function App() {
         });
       }
 
-      // Get user data
+
       let payload = response.data.data;
-      // Get token from local storage
+
       payload.token = localStorage.token;
 
-      // Send data to useContext
       dispatch({
         type: "USER_SUCCESS",
         payload,

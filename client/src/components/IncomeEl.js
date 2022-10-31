@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Table } from 'react-bootstrap'
+import { Container, Table, Button } from 'react-bootstrap'
 import { income } from '../dataDummy/income'
 
 function IncomeEl() {
@@ -30,7 +30,15 @@ function IncomeEl() {
                                 <td >{data.address}</td>
                                 <td >{data.products}</td>
                                 <td className={data.className} >{data.status}</td>
-                                <td className='d-flex justify-content-center' ><img src={data.follup} alt="" /></td>
+                                <td className='d-flex justify-content-center' >
+                                    {data.follup !== '' ? <img src={data.follup} alt="" /> : (
+                                        <>
+                                            <Button variant="danger">cancel</Button>
+                                            <Button variant="success" className="ms-2">approve</Button>
+                                        </>
+                                    )}
+
+                                </td>
 
                             </tr>
                         ))}

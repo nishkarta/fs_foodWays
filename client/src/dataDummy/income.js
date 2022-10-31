@@ -1,5 +1,6 @@
 import check from "../images/check.png"
 import cancel from "../images/cancel.png"
+import both from "../images/Frame.png"
 
 
 export const income = [
@@ -9,7 +10,7 @@ export const income = [
         products: ' Paket Geprek, Paket Mie',
         status: 'Not Approved yet',
         follup: '',
-        className:'text-warning',
+        className: 'text-warning',
     },
     {
         name: 'Haris Gams',
@@ -33,6 +34,6 @@ export const income = [
         products: ' Paket Geprek, Paket Mie',
         status: 'On The Way',
         follup: check,
-        className :'text-primary'
+        className: 'text-primary'
     },
 ]

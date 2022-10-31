@@ -15,7 +15,7 @@ type CartResponse struct {
 	User     UserProfileResponse `json:"user"`
 	Products ProductResponse     `json:"products"`
 	Qty      int                 `json:"qty"`
-	Price    int
+	Price    int                 `json:"price"`
 }
 
 func (CartResponse) TableName() string {

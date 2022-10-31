@@ -12,8 +12,7 @@ function LoginEl({ showLog, setShowLog, setShowReg }) {
     const navigate = useNavigate()
     const handleCloseLog = () => setShowLog(false);
 
-    const title = 'Login'
-    document.title = 'Foodways | ' + title
+
 
     const [state, dispatch] = useContext(UserContext);
 

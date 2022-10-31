@@ -14,9 +14,6 @@ function RegisterEl({ showReg, setShowReg, showLog, setShowLog }) {
     const handleCloseReg = () => setShowReg(false);
 
 
-    const title = 'Register'
-    document.title = 'Foodways | ' + title
-
     // const [state, dispatch] = useContext(UserContext)
 
     const [message, setMessage] = useState(null);
@@ -100,11 +97,11 @@ function RegisterEl({ showReg, setShowReg, showLog, setShowLog }) {
 
 
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <FloatingLabel label='Login Type'>
+                            <FloatingLabel label='User Type'>
                                 <Form.Select required name="role" value={role} onChange={handleChange} aria-label="Default select example" className='bg-grey2 text-grey2 border-grey2'>
                                     <option hidden selected >Select User Type</option>
                                     <option value="cust">As Customer</option>
-                                    <option value="adm">As Admin</option>
+                                    <option value="adm">As Partner</option>
 
                                 </Form.Select>
                             </FloatingLabel>
