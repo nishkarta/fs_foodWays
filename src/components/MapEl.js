@@ -153,7 +153,7 @@ function Map({ showMap, setShowMap, form, setForm, routing, user, partnerLocatio
                             />
                             {/* <LeafletGeocoder /> */}
                             {/* <AddMarker /> */}
-                            {routing ? (
+                            {/* {routing ? (
                                 <GeoRouting partnerLocation={partnerLocation} />
                             ) : (
                                 <Geocoder
@@ -161,7 +161,8 @@ function Map({ showMap, setShowMap, form, setForm, routing, user, partnerLocatio
                                     setForm={setForm}
                                     userDefaultLocation={user && user.location}
                                 />
-                            )}
+                            )} */}
+                            <GeoRouting partnerLocation={partnerLocation} />
                         </MapContainer>
                     </Modal.Body>
                 </Modal>
