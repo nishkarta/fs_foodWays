@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap'
 import { MapContainer, TileLayer, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import "leaflet-control-geocoder/dist/Control.Geocoder.css";
-import "leaflet-control-geocoder/dist/Control.Geocoder.js";
+// import "leaflet-control-geocoder/dist/Control.Geocoder.js";
 import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import { MarkerContext } from './Contexts/MarkerContext';
