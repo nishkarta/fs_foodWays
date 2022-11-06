@@ -1,15 +1,14 @@
 package transactiondto
 
-type AddTransactionRequest struct {
-	ProductID int `json:"productId" form:"productId" gorm:"type: int"`
-	Qty       int `json:"qty" form:"qty" gorm:"type: int"`
-	Price     int `json:"price" form:"price"`
-	SellerID  int `json:"sellerId"`
+type CreateTransactionRequest struct {
+	Status     string `json:"status" form:"status" gorm:"type: varchar(255)"`
+	Qty        int    `json:"qty" form:"qty" gorm:"type: int"`
+	SellerID   int    `json:"sellerId"`
+	TotalPrice int    `json:"totalPrice"`
 }
 
 type UpdateTransactionRequest struct {
 	Status    string `json:"status" form:"status" gorm:"type: varchar(255)"`
-	ProductID int    `json:"productId" form:"productId" gorm:"type: int"`
 	Qty       int    `json:"qty" form:"qty" gorm:"type: int"`
-	Price     int    `json:"price" form:"price"`
+	ProductID int    `json:"product_id" form:"product_id" gorm:"type: int"`
 }

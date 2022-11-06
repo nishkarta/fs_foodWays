@@ -166,3 +166,27 @@ func (h *handlerCart) DeleteCartByID(w http.ResponseWriter, r *http.Request) {
 	response := dto.SuccessResult{Code: "Success", Data: cartDelete}
 	json.NewEncoder(w).Encode(response)
 }
+
+func (h *handlerCart) DeleteAllCart(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	userInfo := r.Context().Value("userInfo").(jwt.MapClaims)
+	userId := int(userInfo["id"].(float64))
+
+	// cartItem, _ := h.CartRepository.GetChartByUser(userId, productId)
+
+	cart := models.Cart{}
+
+	cartDelete, err := h.CartRepository.DeleteAllCart(cart, userId)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	response := dto.SuccessResult{Code: "Success", Data: cartDelete}
+	json.NewEncoder(w).Encode(response)
+}

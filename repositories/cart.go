@@ -13,6 +13,7 @@ type CartRepository interface {
 	GetCartByUser(userID int, productID int) (models.Cart, error)
 	UpdateCartQty(Cart models.Cart, userID int, productID int) (models.Cart, error)
 	DeleteCartByID(Cart models.Cart, ID int) (models.Cart, error)
+	DeleteAllCart(Cart models.Cart, userID int) (models.Cart, error)
 }
 
 func RepositoryCart(db *gorm.DB) *repository {
@@ -54,5 +55,10 @@ func (r *repository) DeleteCartByQty(Cart models.Cart, userID int, productID int
 
 func (r *repository) DeleteCartByID(Cart models.Cart, ID int) (models.Cart, error) {
 	err := r.db.Delete(&Cart, ID).Error
+	return Cart, err
+}
+
+func (r *repository) DeleteAllCart(Cart models.Cart, userID int) (models.Cart, error) {
+	err := r.db.Preload("User").Preload("Products.User").Where("users_id = ?", userID).Delete(&Cart).Error
 	return Cart, err
 }
