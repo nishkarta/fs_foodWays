@@ -15,9 +15,9 @@ type Transaction struct {
 
 type TransactionUserResponse struct {
 	ID       int                 `json:"id"`
-	BuyerID  int                 `json:"-"`
+	BuyerID  int                 `json:"buyer_id"`
 	Buyer    UserProfileResponse `json:"buyer"`
-	SellerID int                 `json:"-"`
+	SellerID int                 `json:"seller_id"`
 	Seller   UserProfileResponse `json:"seller"`
 	Status   string              `json:"status"`
 	// ProductID int                 `json:"-"`
