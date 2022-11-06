@@ -34,7 +34,7 @@ function ProfileEl() {
   const allCartPrice = cartData?.map((item) => item.product.price * item.qty);
   const subTotal = allCartPrice?.reduce((a, b) => a + b, 0);
   const allQty = cartData?.map(p => p.qty).reduce((a, b) => a += b, 0)
-  console.log(subTotal);
+  // console.log(subTotal);
   useEffect(() => {
     refetch()
   }, [])

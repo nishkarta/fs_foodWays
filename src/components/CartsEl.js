@@ -23,6 +23,11 @@ function CartsEl() {
     const [latitudeNow, setLatitudeNow] = useState('')
     const [longitudeNow, setLongitudeNow] = useState('')
 
+    // const [form, setForm] = useState({
+    //     location: "",
+    // });
+
+
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
             setLatitudeNow(position.coords.latitude)
@@ -32,6 +37,21 @@ function CartsEl() {
     }, [])
 
     const position = [latitudeNow, longitudeNow];
+
+    useEffect(() => {
+        const midtransScriptUrl = 'https://app.sandbox.midtrans.com/snap/snap.js';
+        //change this according to your client-key
+        const myMidtransClientKey = "SB-Mid-client-XuvTZnVxV9tn-tIZ";
+
+        let scriptTag = document.createElement('script');
+        scriptTag.src = midtransScriptUrl;
+        scriptTag.setAttribute('data-client-key', myMidtransClientKey);
+
+        document.body.appendChild(scriptTag);
+        return () => {
+            document.body.removeChild(scriptTag);
+        };
+    }, []);
 
 
     const addToCartHandler = async (productId, productPrice) => {
@@ -74,6 +94,42 @@ function CartsEl() {
     const subTotal = allCartPrice?.reduce((a, b) => a + b, 0);
     const allQty = cartData?.map(p => p.qty).reduce((a, b) => a += b, 0)
     console.log(subTotal);
+
+    const orderHandler = async () => {
+        try {
+            const response = await API.post('/transaction', {
+                status: 'pending',
+                qty: allQty,
+                sellerId: cartData[0]?.product.user.id,
+                totalPrice: subTotal,
+            });
+
+            // Insert transaction data
+
+            const token = response.data.data.token;
+
+            window.snap.pay(token, {
+                onSuccess: function (result) {
+                    console.log(result);
+                    navigate('/profile');
+                },
+                onPending: function (result) {
+                    console.log(result);
+                    navigate('/profile');
+                },
+                onError: function (result) {
+                    console.log(result);
+                },
+                onClose: function () {
+                    alert('you closed the popup without finishing the payment');
+                },
+            });
+        } catch (err) {
+            console.log(err)
+        }
+    };
+
+
     useEffect(() => {
         refetch()
     }, [])
@@ -111,7 +167,7 @@ function CartsEl() {
                             </Col>
                         ) : (
                             cartData?.map((item) => (
-                                <Col>
+                                <Col key={item.index}>
                                     <Row className='d-flex align-items-center'>
 
                                         <Col>
@@ -144,7 +200,7 @@ function CartsEl() {
                                             </Row>
                                         </Col>
                                         <Col className='col-4 text-end'>
-                                            <h6 className='text-danger my-3 f-14'>{item.product.price * item.qty}</h6>
+                                            <h6 className='text-danger my-3 f-14'>{convertRupiah.convert(item.product.price * item.qty)}</h6>
                                             <h6 className='text-danger my-3'><img style={{ cursor: 'pointer' }} src={bin} alt="" onClick={async () => {
                                                 const response = await API.delete(
                                                     `/cart/delete/${item.product.id}`
@@ -249,7 +305,7 @@ function CartsEl() {
 
                             </Col>
                             <Form.Group className="mt-5 pt-lg-5 float-end col-12 col-lg-8">
-                                <Button type="button" className='btn-brown btn-full px-5 py-2 f-14 fw-extra-bold' onClick={() => setShowResponse(true)}>
+                                <Button type="button" className='btn-brown btn-full px-5 py-2 f-14 fw-extra-bold' onClick={orderHandler}>
                                     Order
                                 </Button>
                             </Form.Group>
@@ -263,7 +319,7 @@ function CartsEl() {
                 </Row>
             </Container>
 
-            <MapEl showMap={showMap} setShowMap={setShowMap} />
+            <MapEl showMap={showMap} setShowMap={setShowMap} routing={true} partnerLocation={cartData && cartData[0]?.product?.user?.location} />
 
             <Modal show={showResponse} onHide={() => setShowResponse(false)}>
                 <Modal.Header closeButton>

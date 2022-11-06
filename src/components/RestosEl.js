@@ -14,6 +14,9 @@ import restopp from "../images/defaultrestopp.jpg"
 function RestoCard({ item }) {
     const navigate = useNavigate()
     const [state] = useContext(UserContext);
+    // const loc1 = [-6.402648405963884,106.83071136474611]
+    // const loc2 = [-6.405255904575551,106.79335382401636]
+
 
 
     const [showLog, setShowLog] = useState(false);

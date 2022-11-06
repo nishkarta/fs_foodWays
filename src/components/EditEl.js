@@ -6,22 +6,25 @@ import FormAll from './Atoms/FormAll'
 import { useNavigate } from 'react-router-dom'
 import { API } from '../config/api'
 import { UserContext } from './Contexts/userContext'
+import { MarkerContext } from './Contexts/MarkerContext'
 import { useQuery } from 'react-query'
 import MapEl from './MapEl'
 
 function EditEl() {
     const [latitudeNow, setLatitudeNow] = useState('')
     const [longitudeNow, setLongitudeNow] = useState('')
+    let { loc, setLoc } = useContext(MarkerContext)
+    // const { loc, setLoc } = useContext(MarkerContext)
+    // let [lat, setLat] = useState('')
+    // let [lon, setLon] = useState('')
+    // console.log(loc)
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
             setLatitudeNow(position.coords.latitude)
             setLongitudeNow(position.coords.longitude)
         })
-
     }, [])
-
-    const position = [latitudeNow, longitudeNow];
 
     const [state] = useContext(UserContext)
     const [preview, setPreview] = useState(null)
@@ -58,6 +61,7 @@ function EditEl() {
 
 
     const handleChange = (e) => {
+        console.log("cobaaa", e.target.name, e.target.value)
         setForm({
             ...form,
             [e.target.name]:
@@ -142,7 +146,7 @@ function EditEl() {
 
                         <Row className="mb-5">
                             <Col className='col-12 col-md-8 col-lg-9'>
-                                <FormAll value={form.location ? form.location : position} name="location" onChange={handleChange} label="Location" type="text" placeholder="Location" className="mb-3 bg-grey2 border-grey3" />
+                                <FormAll onChange={handleChange} value={form.location} name="location" label="Location" type="text" placeholder="Location" className="mb-3 bg-grey2 border-grey3" />
                             </Col>
                             <Col>
                                 <Form.Group className="mb-3">
@@ -165,7 +169,7 @@ function EditEl() {
                 </div>
             </Container>
 
-            <MapEl showMap={showMap} setShowMap={setShowMap} />
+            <MapEl showMap={showMap} setShowMap={setShowMap} form={form} setForm={setForm} />
 
         </div >
 
