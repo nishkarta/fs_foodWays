@@ -150,7 +150,7 @@ function EditEl() {
                             </Col>
                             <Col>
                                 <Form.Group className="mb-3">
-                                    <Button type="button" className='btn-brown btn-full p-3 ff-avenir f-14 d-none d-md-block' onClick={() => setShowMap(true)}>
+                                    <Button type="button" className='btn-brown btn-full p-3 ff-avenir f-14 d-none d-md-block'>
                                         Select on Map <img src={map} alt='asfdfa'></img>
                                     </Button>
 

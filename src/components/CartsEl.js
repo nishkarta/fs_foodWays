@@ -145,7 +145,7 @@ function CartsEl() {
                         <Form.Control value={position} type="text" placeholder="Enter location" className='p-2 border-0' />
                     </Form.Group>
                     <Form.Group className='col'>
-                        <Button className='btn-full btn-brown p-2 mb-3 f-14 fw-extra-bold' onClick={() => setShowMap(true)}>
+                        <Button className='btn-full btn-brown p-2 mb-3 f-14 fw-extra-bold' >
                             Select on Map <img src={map} alt='asfdfa'></img>
                         </Button>
                     </Form.Group>
