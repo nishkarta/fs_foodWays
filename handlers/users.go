@@ -72,8 +72,6 @@ func (h *handlerUser) GetRestosProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user.Image = os.Getenv("PATH_FILE") + user.Image
-
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Code: "success", Data: convertRestoProduct(user)}
 	json.NewEncoder(w).Encode(response)
@@ -105,7 +103,10 @@ func (h *handlerUser) CreateUser(w http.ResponseWriter, r *http.Request) {
 	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 
 	// Upload file to Cloudinary ...
-	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "dumbmerch"})
+	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "WaysFood"})
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 
 	validation := validator.New()
 	err = validation.Struct(request)
@@ -153,9 +154,9 @@ func (h *handlerUser) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	dataContex := r.Context().Value("dataFile")
 	fmt.Print("sampe sini ga", dataContex)
-	filename := ""
+	filepath := ""
 	if dataContex != nil {
-		filename = dataContex.(string)
+		filepath = dataContex.(string)
 	}
 
 	request := usersdto.UpdateUserRequest{
@@ -165,9 +166,18 @@ func (h *handlerUser) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		Phone:    r.FormValue("phone"),
 		Gender:   r.FormValue("gender"),
 		Location: r.FormValue("location"),
-		Image:    filename,
+		Image:    filepath,
 		Role:     r.FormValue("role"),
 	}
+
+	var ctx = context.Background()
+	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
+	var API_KEY = os.Getenv("API_KEY")
+	var API_SECRET = os.Getenv("API_SECRET")
+
+	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
+
+	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "WaysFood"})
 
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 	user, err := h.UserRepository.GetUser(int(id))
@@ -206,7 +216,7 @@ func (h *handlerUser) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		user.Location = request.Location
 	}
 	if request.Image != "" {
-		user.Image = request.Image
+		user.Image = resp.SecureURL
 	}
 	if request.Role != "" {
 		user.Role = request.Role
