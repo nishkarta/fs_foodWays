@@ -78,10 +78,6 @@ func (h *handlerProduct) GetProductByPartner(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	for i, p := range products {
-		products[i].Image = os.Getenv("PATH_FILE") + p.Image
-	}
-
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Code: "success", Data: products}
 	json.NewEncoder(w).Encode(response)
